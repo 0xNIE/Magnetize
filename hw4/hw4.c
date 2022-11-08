@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "hw4.h"
+
 
 char* flip_case(char* s) 
 {
@@ -102,6 +102,7 @@ struct measurement add_measurements(struct measurement m1, struct measurement m2
         return res;
     } else {
         fprintf(stderr, "ERROR: Units or exponents not equal.\n");
+        /* break; */
     }
 
 }
@@ -124,6 +125,7 @@ struct measurement multiply_measurements(struct measurement m1, struct measureme
         res.exponent = m1.exponent + m2.exponent;
     } else {
         fprintf(stderr, "ERROR: Units are not equal.\n");
+        /* break; */
     }
 }
 
@@ -149,18 +151,21 @@ struct measurement convert_units(struct conversion* conversions,
                                  struct measurement m, 
                                  char* to)
 {
+    struct measurement res;
     for (int i = 0; i < n_conversions; i++){
         if (strcmp(conversions[i].from, m.units) == 0&&strcmp(conversions[i].to, to) == 0) {
-            struct measurement res;
+
             double val = m.value;
-            for (int j = 0; i < measurement.exponent; i++) {
+            for (int j = 0; j < m.exponent; j++) {
                 val *= conversions[i].mult_by;
             }
             res.value = val;
             res.units = to;
             res.exponent = m.exponent;
         } else {
-            fprintf(stderr, "ERROR: No direct conversion provided");
+            fprintf(stderr, "ERROR: No direct conversion provided\n");
+            /* break; */
         }
     }
+    return res;
 }

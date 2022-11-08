@@ -116,16 +116,16 @@ struct conversion {
     char *from, *to;
     double mult_by;
 };
-struct conversion aa = {.from = "meter", .to = "mile", .mult_by = 0.000621371};
-struct conversion bb = {.from = "mile", .to = "meter", .mult_by = 1609.34};
-struct conversion* conv1 = {&aa, &bb};
+
+struct conversion conv1[] = {{.from = "meter", .to = "mile", .mult_by = 0.000621371}, {.from = "mile", .to = "meter", .mult_by = 1609.34}};
 /* evidence_convert_units: test convert_units */
 void evidence_convert_units()
 {
     printf("*** testing convert_units\n");
-    struct measurement g_c;
-    g_c = convert_units(conv1, 2, g, "mile");
-    printf("- expecting 0.310686, mile, 1 : %lf, %s, %u", g_c.value, g_c.units, g_c.exponent);
+    struct measurement g_c = convert_units(conv1, 2, g, "mile");
+    struct measurement e_c = convert_units(conv1, 2, e, "meter");
+    printf("- expecting 0.310686, mile, 1 : %lf, %s, %u\n", g_c.value, g_c.units, g_c.exponent);
+    printf("- expecitng 8135152.7, meter, 2 : %lf, %s, %u\n", e_c.value, e_c.units, e_c.exponent);
 
 }
 /* main: run the evidence functions above */
@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
     evidence_scale_measurement();
     evidence_multiply_measurements();
     evidence_measurement_tos();
+    evidence_convert_units();
 
     return 0;
 }
