@@ -10,16 +10,25 @@ const char *_vcard_todo_format = "TODO [vcard]: %s\nhalting\n";
  */
 vcard *vcard_new(char *cnet, char *email, char *fname, char *lname, char *tel)
 {
-  fprintf(stderr,_vcard_todo_format,"vcard_new");
-  exit(1);
+  vcard *new = (vcard*)malloc(sizeof(vcard));
+  new->cnet = strdup(cnet);
+  new->email = strdup(email);
+  new->fname = strdup(fname);
+  new->lname = strdup(lname);
+  new->tel = strdup(tel);
+  return new;
 }
 
 /* vcard_free : free vcard and the strings it points to
  */
 void vcard_free(vcard *c)
 {
-  fprintf(stderr,_vcard_todo_format,"vcard_free");
-  exit(1);
+  free(c->cnet);
+  free(c->email);
+  free(c->fname);
+  free(c->lname);
+  free(c->tel);
+  free(c);
 }
 
 /* vcard_show : display contents of vcard
@@ -30,6 +39,7 @@ void vcard_free(vcard *c)
  */
 void vcard_show(FILE *f, vcard *c)
 {
-  fprintf(stderr,_vcard_todo_format,"vcard_show");
-  exit(1);
+  fprintf(f, "cnet:%s email:%s fname:%s lname:%s tel:%s", c->cnet, c->email,
+  c->fname, c->lname, c->tel);
 }
+
