@@ -39,7 +39,7 @@ void vcard_free(vcard *c)
  */
 void vcard_show(FILE *f, vcard *c)
 {
-  fprintf(f, "cnet:%s email:%s fname:%s lname:%s tel:%s", c->cnet, c->email,
+  fprintf(f, "cnet %s\nemail %s\nfname %s\nlname %s\ntel %s\n", c->cnet, c->email,
   c->fname, c->lname, c->tel);
 }
 

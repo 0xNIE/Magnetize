@@ -74,7 +74,7 @@ vcard *bst_search(bst *t, char *cnet, int *n_comparisons)
   if (t == NULL) {
     return NULL;
   } else {
-    int x = strcmp(t->c->cnet, cnet);
+    int x = strcmp(cnet, t->c->cnet);
     if (x < 0) {
       ++(*n_comparisons);
       return bst_search(t->left, cnet, n_comparisons);
@@ -114,8 +114,13 @@ unsigned int bst_c(FILE *f, bst *t, char c)
 
 void bst_free(bst *t)
 {
-  vcard_free(t->c);
-  bst_free(t->left);
-  bst_free(t->right);
-  free(t);
+  if (t == NULL) {
+    free(t);
+  }
+  else {
+    vcard_free(t->c);
+    bst_free(t->left);
+    bst_free(t->right);
+    free(t);
+  }
 }
