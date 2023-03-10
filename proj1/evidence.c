@@ -123,6 +123,58 @@ void evidence_drop_piece()
     board_show(g1->b);
     drop_piece(g1, 0);
     board_show(g1->b);
+    free(g1);
+}
+
+/* evidence_magnetize: test magnetize */
+void evidence_magnitize()
+{
+    printf("*** testing magnitize\n");
+    game* g1 = new_game(2, 2, 4, 4, MATRIX);
+    board_set(g1->b, make_pos(3, 0), BLACK);
+    board_set(g1->b, make_pos(3, 1), BLACK);
+    board_set(g1->b, make_pos(2, 1), BLACK);
+    board_show(g1->b);
+    magnetize(g1);
+    board_show(g1->b);
+    printf("- expecting 1 2 2 2 0 : %d %u %u %u %u\n",
+    g1->player, g1->square, g1->maglock, g1->black_rem, g1->white_rem);
+
+
+    game_free(g1);
+}
+
+/* evidence_game_outcome: test game_outcome */
+void evidence_game_outcome()
+{
+    printf("*** testing game_outcome\n");
+    game* g1 = new_game(2, 2, 4, 4, MATRIX);
+    board_set(g1->b, make_pos(3, 0), BLACK);
+    board_set(g1->b, make_pos(2, 0), BLACK);
+    board_set(g1->b, make_pos(3, 1), BLACK);
+    board_set(g1->b, make_pos(2, 1), BLACK);
+    printf("- expecting 1 : %u\n", game_outcome(g1));
+    game* g2 = new_game(3, 2, 4, 4, MATRIX);
+    board_set(g2->b, make_pos(3, 1), WHITE);
+    board_set(g2->b, make_pos(2, 1), WHITE);
+    board_set(g2->b, make_pos(1, 1), WHITE);
+    board_set(g2->b, make_pos(3, 2), WHITE);
+    board_set(g2->b, make_pos(2, 2), WHITE);
+    board_set(g2->b, make_pos(1, 2), WHITE);
+    board_set(g2->b, make_pos(3, 3), WHITE);
+    board_set(g2->b, make_pos(2, 3), WHITE);
+    board_set(g2->b, make_pos(1, 3), WHITE);
+    printf("- expecting 2 : %u\n", game_outcome(g2));
+    game* g3 = new_game(2, 2, 4, 4, MATRIX);
+    board_set(g1->b, make_pos(3, 0), BLACK);
+    board_set(g1->b, make_pos(2, 0), WHITE);
+    board_set(g1->b, make_pos(3, 1), BLACK);
+    board_set(g1->b, make_pos(2, 1), WHITE);
+    printf("- expecting 0 : %u\n", game_outcome(g3));
+
+    game_free(g1);
+    game_free(g2);
+    game_free(g3);
 }
 
 /* main: run the evidence functions above */
@@ -136,6 +188,8 @@ int main(int argc, char *argv[])
     evidence_board_set();
     evidence_new_game();
     evidence_drop_piece();
+    evidence_magnitize();
+    evidence_game_outcome();
 
     return 0;
 }

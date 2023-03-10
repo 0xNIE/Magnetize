@@ -105,7 +105,7 @@ void maglock_end(game* g)
     }
 }
 
-bool move_mag(game* g)
+bool magnetize(game* g)
 {
     pos current, lefright;
     unsigned int wrem = g->white_rem, brem = g->black_rem;
