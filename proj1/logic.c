@@ -132,8 +132,6 @@ bool magnetize(game* g)
                         }
                     }
                 }
-                g->white_rem = g->maglock;
-                g->player = BLACKS_TURN;
                 return true;
             }
         case BLACKS_TURN:
@@ -159,8 +157,6 @@ bool magnetize(game* g)
                         }
                     }
                 }
-                g->black_rem = g->maglock;
-                g->player = WHITES_TURN;
                 return true;
             }
     }
